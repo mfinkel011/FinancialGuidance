@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # TODO: Add your OpenAI API key here
-OPENAI_API_KEY = "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"  # Replace with your actual API key
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 # Initialize OpenAI client
 if OPENAI_API_KEY != "YOUR_OPENAI_API_KEY_HERE":
