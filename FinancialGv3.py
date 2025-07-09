@@ -72,7 +72,7 @@ st.markdown("""
     }
     .results-container {
         background: #e8f5e8;
-        padding: 1.2 rem;
+        padding: 1.3rem;
         border-radius: 10px;
         border-left: 4px solid #28a745;
     }
@@ -254,7 +254,7 @@ Also insurance is an important risk management. And use tools that work for you-
 Google sheets is a great tool for money tracking and planning. Or there are apps that can help with that. Always emphasize long term saving- include detailed advice like investing in VOO or FXAIX to track the S&P 500"""
 
         response = openai.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": "You are a helpful financial advisor providing personalized guidance in paragraph form, not bullet points. Tailor your advice to the user's country while also providing relevant USA information where applicable."},
                 {"role": "user", "content": prompt}
@@ -530,6 +530,7 @@ def show_results_page():
     """, unsafe_allow_html=True)
     
     # Display the financial guidance
+    st.markdown("") 
     st.markdown(st.session_state.financial_guidance)
     
     # =============================================================================
@@ -562,6 +563,10 @@ def show_results_page():
     st.markdown("""
     ---
     
+    <div style="text-align: center; font-size: 1em; font-weight: bold; margin: 20px 0;">
+    Your personalized guidance is displayed above
+    </div>
+    
     ### 📞 Ready for More Personalized Support?
     
     This AI powered guidance is just the beginning. For comprehensive financial planning, 
@@ -571,6 +576,11 @@ def show_results_page():
     Our team is ready to help you achieve your financial goals!
     
     *🔒 Privacy Note: Your quiz responses were not saved or stored by Michael's Consulting. This assessment was for immediate guidance only.*
+    
+    <div style="text-align: center; font-size: .8em; font-weight: bold; margin: 20px 0;">
+    Your personalized guidance is displayed above
+    </div>
+    
     """, unsafe_allow_html=True)
 
 def main():
