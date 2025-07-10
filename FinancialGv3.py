@@ -24,6 +24,7 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 if OPENAI_API_KEY != "YOUR_OPENAI_API_KEY_HERE":
     openai.api_key = OPENAI_API_KEY
 
+
 # Custom CSS for better styling
 st.markdown("""
 <style>
@@ -73,7 +74,7 @@ st.markdown("""
     .results-container {
         background: #e8f5e8;
         padding: 1.3rem;
-        border-radius: 10px;
+        border-radius: 15px;
         border-left: 4px solid #28a745;
     }
     .debug-container {
@@ -128,7 +129,7 @@ def format_quiz_answers(answers: Dict) -> str:
         "How do you feel about your monthly budget and spending?",
         "Do you have an emergency fund saved up?",
         "How do you feel about your credit cards and rewards?",
-        "Are you looking for bonus tips to level up your money game?"
+        "Anything else I should know? Are you looking for bonus tips to level up your money game?"
     ]
     
     answered_questions = []
@@ -150,7 +151,7 @@ def get_financial_guidance(quiz_summary: str) -> str:
     try:
         if OPENAI_API_KEY == "YOUR_OPENAI_API_KEY_HERE":
             return """
-            **Demo Mode - OpenAI API Key Required**
+            **Demo Mode - AI connection Required- Contact Michael's Consulting for troubleshooting**
             
             To get personalized financial guidance, please add your OpenAI API key to the code.
             
@@ -164,7 +165,8 @@ def get_financial_guidance(quiz_summary: str) -> str:
             """
         
         prompt = f"""ChatGPT, here is a list of quiz responses to help build a financial guidance summary. Please provide your recommendations in 3-4 cohesive paragraphs rather than bullet points. Use the guidance below as a reference for how to respond to each question, but feel free to add any additional advice you think is relevant. Summarize your recommendations clearly and helpfully. Be empathetic as to how the ideal isn't always doable because of financial constraints. 
-
+        
+Also, provide research guides when appropriate. Give the user the next things to research for their situation.
 IMPORTANT: The user's country is mentioned in the first question. Please provide advice that is relevant to their country's financial system, tax laws, and available investment accounts, while also including relevant USA information where applicable. If they're in the USA, focus primarily on USA advice. If they're in another country, provide country-specific advice first, then mention USA equivalents where relevant.
 
 Always end your response with: 'Reach out to Michael's Consulting for personalized guidance and support at michaels-consulting.com.'
@@ -177,15 +179,16 @@ Guidance per question:
 
 2. What are your biggest money goals for the next 10 years?
 If they say buying a house:
-→ Start saving in a high-yield savings account (find them online) for your down payment. Set a goal (e.g., 20% down if that's feasible'), and research first-time homebuyer programs.
+→ Start saving in a high-yield savings account (find them online) for your down payment. Set a goal (e.g., 20% down if that's feasible but be empathetic), and research first-time homebuyer programs.
 → Balance house savings with retirement savings. Don't put all your eggs in the "home" basket.
 If they say retirement:
 → Prioritize maxing out retirement accounts like a Roth IRA, 401(k), or HSA. Understand the difference of each.
-→ Invest long-term in diversified index funds. Don't get caught up in stock picking.
+→ Invest long-term in diversified index funds and give examples like VOO or FXAIX as a great place to start. Don't get caught up in stock picking.
 If they say paying off student loans or other debt:
-→ Focus on the highest-interest debt first, then invest more aggressively when it's paid off.
+→ Focus on the highest-interest debt first, then invest more aggressively when it's paid off. 
 If they say travel, business, etc.:
 → Create a separate savings bucket (short-term savings or conservative investments) outside your retirement accounts.
+Otherwise, address their goals using your own judgement. Be clear about the importance of savings
 
 3. Do you have any debt with high interest (7%+)?
 If yes:
@@ -201,11 +204,11 @@ If they bought used, low interest (~0-4%), short term:
 → That's financially solid. Stick to the payment plan or pay it off early if desired.
 If they're leasing:
 → Make sure they understand mileage limits and long-term costs vs. ownership.
-Overall, always recommend buying a somewhat used reliable car that a mechanic signs off on.
+Overall, always recommend buying a somewhat used reliable car that a mechanic signs off on. We spend little time in our cars, but people spend way too much money on them.
 
 5. Are you investing? What accounts? Long or short term?
 If they say Roth IRA, 401(k), brokerage, long term:
-→ Keep it up. Encourage diversified low-cost index funds.
+→ Keep it up. Encourage diversified low-cost index funds like VOO and FXAIX, or others that are smart. Advise and guide to keep expense ratios low!
 If they only mention short-term trading (crypto, meme stocks, individual stocks):
 → Suggest balancing that with long-term, steady investments like index funds. Short-term plays are riskier. Most people lose money across the board.
 If they're not investing yet:
@@ -224,6 +227,7 @@ If they're on track:
 → Awesome — now optimize. Automate savings, boost investments, fine-tune categories like subscriptions and food spending.
 If they're struggling:
 → Recommend tracking spending with an app or spreadsheet for a month. Focus on needs vs. wants. Start with small changes like cutting eating out, subscriptions, etc. People often underestimate their spending.
+Should always aim to save!
 
 8. Do you have an emergency fund?
 If they have less than 1 month of expenses:
@@ -235,9 +239,9 @@ If they have 3+ months saved:
 If they carry a balance:
 → Pay this off before investing heavily. Credit card interest is brutally high (15%–25%). Consider a balance transfer if needed.
 If they pay in full and use for rewards:
-→ Perfect. Recommend checking if they're maximizing cashback, travel rewards, or rotating categories.
+→ Perfect. Recommend checking if they're maximizing cashback, travel rewards, or rotating categories. Give resources like Doctor of Credit and PointsYeah.
 
-10. Are you looking for bonus tips?
+10. Anything else I should know? Are you looking for bonus tips?
 If yes:
 → Offer tips like:
 • Best cashback/travel cards for their situation.
@@ -247,8 +251,9 @@ If yes:
 • Refer to resources like doctor of credit
 If no:
 → Respect that they're happy where they are. Maybe send a tip every now and then just for fun.
+Also, use your judgement to advise on any other requests here.
 
-Some key recommendations to keep in mind no matter what: Roths are great if you can get one. If not use loopholes like backdoor Roths if you can. Roths have no RMDs and contributions can be taken out so it's a fine place for mid-term savings like 5-15 years, but ideally it's for long term.
+Some key recommendations to keep in mind for all guidance provided: Roths are great if you can get one. If not use loopholes like backdoor Roths if you can. Roths have no RMDs and contributions can be taken out whenever so it's a fine place for mid-term savings of about 5-15 years, but ideally it's for long term.
 If you're doing other things while investing, like buying a house, just remember every year matters, so make investing a priority no matter what.
 Also insurance is an important risk management. And use tools that work for you- credit cards are great If you can get rewards but if you are going to overspend, don't get one.
 Google sheets is a great tool for money tracking and planning. Or there are apps that can help with that. Always emphasize long term saving- include detailed advice like investing in VOO or FXAIX to track the S&P 500"""
@@ -256,7 +261,7 @@ Google sheets is a great tool for money tracking and planning. Or there are apps
         response = openai.chat.completions.create(
             model="gpt-4.1-mini",
             messages=[
-                {"role": "system", "content": "You are a helpful financial advisor providing personalized guidance in paragraph form, not bullet points. Tailor your advice to the user's country while also providing relevant USA information where applicable."},
+                {"role": "system", "content": "You are a helpful financial advisor providing personalized guidance in paragraph form, not bullet points. Tailor your advice to the user's country while also providing relevant USA information where applicable. Do not use any Markdown, asterisks, or underscores. Use simple paragraphs."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=1500
@@ -265,7 +270,7 @@ Google sheets is a great tool for money tracking and planning. Or there are apps
         return response.choices[0].message.content
     
     except Exception as e:
-        return f"Error generating financial guidance: {str(e)}. Please check your OpenAI API key and try again."
+        return f"Error generating financial guidance: {str(e)}. Please contact Michael's Consulting."
 
 def show_welcome_page():
     """Display the welcome page"""
@@ -292,7 +297,9 @@ def show_welcome_page():
     
     The quiz takes just 5-10 minutes and covers the most important aspects of your financial life. 
     Ready to take control of your financial future?
-    """)
+    
+    <p style="font-size: 0.9em; color: #666; margin-top: 1rem;">🔒 <em>Privacy Note: Your responses are not seen, saved, or stored by Michael's Consulting. This assessment is for immediate guidance only.</em></p>
+    """, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -313,7 +320,7 @@ def show_quiz_page():
     <div class="quiz-container">
         <p><strong>Please answer all questions honestly for the most accurate guidance.</strong></p>
         <p>Your responses will be used to generate personalized financial recommendations.</p>
-        <p style="font-size: 0.9em; color: #666;">🔒 <em>Privacy Note: Your responses are not saved or stored by Michael's Consulting. This assessment is for immediate guidance only.</em></p>
+        <p style="font-size: 1em; color: #666;">🔒 <em>Privacy Note: Your responses are not seen, saved, or stored by Michael's Consulting. This assessment is for immediate guidance only.</em></p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -330,7 +337,8 @@ def show_quiz_page():
         key="q1",
         placeholder="e.g., United States, Canada, United Kingdom, etc.",
         label_visibility="collapsed",
-        value=answers.get('q1', '')
+        value=answers.get('q1', ''),
+        help=None
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -344,7 +352,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your financial goals...", 
         label_visibility="collapsed", 
-        value=answers.get('q2', '')
+        value=answers.get('q2', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -358,7 +367,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your high-interest debt...", 
         label_visibility="collapsed", 
-        value=answers.get('q3', '')
+        value=answers.get('q3', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -372,7 +382,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your car financing situation...", 
         label_visibility="collapsed", 
-        value=answers.get('q4', '')
+        value=answers.get('q4', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -386,7 +397,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your investment accounts and strategy...", 
         label_visibility="collapsed", 
-        value=answers.get('q5', '')
+        value=answers.get('q5', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -419,7 +431,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your budgeting situation...", 
         label_visibility="collapsed", 
-        value=answers.get('q7', '')
+        value=answers.get('q7', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -433,7 +446,8 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your emergency fund...", 
         label_visibility="collapsed", 
-        value=answers.get('q8', '')
+        value=answers.get('q8', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -447,13 +461,14 @@ def show_quiz_page():
         height=100, 
         placeholder="Describe your credit card usage...", 
         label_visibility="collapsed", 
-        value=answers.get('q9', '')
+        value=answers.get('q9', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Question 10
     #st.markdown('<div class="question-section">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">10. Are you looking for bonus tips to level up your money game?</div>', unsafe_allow_html=True)
+    st.markdown('<div class="question-title">10. Anything else I should know? Are you looking for bonus tips to level up your money game?</div>', unsafe_allow_html=True)
     st.markdown('<div class="question-subtitle">Example topics: Winning with credit card rewards, Optimizing savings accounts, Automating your finances, Smart ways to cut bills</div>', unsafe_allow_html=True)
     q10 = st.text_area(
         label="Bonus tips",
@@ -461,7 +476,8 @@ def show_quiz_page():
         height=100, 
         placeholder="What additional topics interest you?", 
         label_visibility="collapsed", 
-        value=answers.get('q10', '')
+        value=answers.get('q10', ''),
+        help=""
     )
     st.markdown('</div>', unsafe_allow_html=True)
     
@@ -531,7 +547,7 @@ def show_results_page():
     
     # Display the financial guidance
     st.markdown("") 
-    st.markdown(st.session_state.financial_guidance)
+    st.markdown(st.session_state.financial_guidance, unsafe_allow_html=False)
     
     # =============================================================================
     # DEBUG SECTION - REMOVE THIS ENTIRE SECTION BEFORE PRODUCTION DEPLOYMENT
