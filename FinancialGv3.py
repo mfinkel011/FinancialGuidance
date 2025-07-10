@@ -259,7 +259,7 @@ Also insurance is an important risk management. And use tools that work for you-
 Google sheets is a great tool for money tracking and planning. Or there are apps that can help with that. Always emphasize long term saving- include detailed advice like investing in VOO or FXAIX to track the S&P 500"""
 
         response = openai.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a helpful financial advisor providing personalized guidance in paragraph form, not bullet points. Tailor your advice to the user's country while also providing relevant USA information where applicable. Do not use any Markdown, asterisks, or underscores. Use simple paragraphs."},
                 {"role": "user", "content": prompt}
